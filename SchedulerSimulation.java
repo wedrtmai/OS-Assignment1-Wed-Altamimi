@@ -1,7 +1,7 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Random;
 
 // ANSI Color Codes for enhanced terminal output
@@ -26,6 +26,7 @@ class Colors {
 // Class representing a process that implements Runnable to be run by a thread
 class Process implements Runnable {
     private String name; // Name of the process
+    private int priority;
     private int burstTime; // Total time the process requires to complete (in milliseconds)
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
@@ -33,11 +34,14 @@ class Process implements Runnable {
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
+        this.priority=1+new Random().nextInt(10);
         this.burstTime = burstTime;
         this.timeQuantum = timeQuantum;
         this.remainingTime = burstTime; // Initially, remaining time is equal to the burst time
     }
-
+public int getPriority(){
+    return priority;
+}
     // This method will be called when the thread for this process is started
     @Override
     public void run() {
@@ -295,5 +299,6 @@ public class SchedulerSimulation {
                           Colors.RESET + Colors.BLUE + " added to ready queue" + Colors.RESET + 
                           " │ Burst time: " + Colors.YELLOW + process.getBurstTime() + "ms" + 
                           Colors.RESET);
+                          System.out.println("Priority:"+process.getPriority());
     }
 }
