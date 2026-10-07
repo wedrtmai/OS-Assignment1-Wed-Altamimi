@@ -148,6 +148,7 @@ public int getPriority(){
 }
 
 public class SchedulerSimulation {
+    public static int contextSwitchCount=0;
     public static void main(String[] args) {
         // ⚠️ IMPORTANT: Put your student ID here to seed the random number generator
         // This makes your output unique to you - DO NOT forget to change this!
@@ -242,6 +243,7 @@ public class SchedulerSimulation {
             
             // Start the thread, which will run the process for one time quantum
             currentThread.start();
+            contextSwitchCount++;
             
             try {
                 // Wait for the thread to finish its time quantum before continuing to the next process
@@ -280,6 +282,7 @@ public class SchedulerSimulation {
         System.out.println(Colors.BOLD + Colors.BRIGHT_GREEN + 
                           "╚════════════════════════════════════════════════════════════════════════════════╝" + 
                           Colors.RESET + "\n");
+                          System.out.println("Total Context Switches:"+contextSwitchCount);
     }
     
     // Method to add a process to the queue and map, while printing a "ready" message
