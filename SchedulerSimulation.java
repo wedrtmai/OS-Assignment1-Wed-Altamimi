@@ -30,17 +30,28 @@ class Process implements Runnable {
     private int burstTime; // Total time the process requires to complete (in milliseconds)
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
-
+private long arrivalTime;
+private long finishTime;
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
         this.priority=1+new Random().nextInt(10);
         this.burstTime = burstTime;
+        this.arrivalTime=System.currentTimeMillis();
         this.timeQuantum = timeQuantum;
         this.remainingTime = burstTime; // Initially, remaining time is equal to the burst time
     }
 public int getPriority(){
     return priority;
+}
+public void setFinishTime(){
+    this.finishTime=System.currentTimeMillis();
+}
+public long getTurnaroundTime(){
+    return this.finishTime-this.arrivalTime;
+}
+public long getWaitingTime(){
+    return getTurnaroundTime()-this.burstTime;
 }
     // This method will be called when the thread for this process is started
     @Override
@@ -256,21 +267,21 @@ public class SchedulerSimulation {
             Process process = processMap.get(currentThread);
             
             // Check if the process is not finished
-            if (!process.isFinished()) {
-                // If the process still has remaining time, check if there are more processes in queue
-                if (!processQueue.isEmpty()) {
-                    // Re-enqueue the process to give it another chance to run in the next round
-                    addProcessToQueue(process, processQueue, processMap);
-                } else {
-                    // If this is the last process in the queue, run it to completion
-                    System.out.println(Colors.BRIGHT_YELLOW + "  ⚠ " + Colors.CYAN + process.getName() + 
-                                      Colors.RESET + Colors.YELLOW + " is the last process → running to completion" + 
-                                      Colors.RESET);
-                    process.runToCompletion(); // Run until the process completes
-                }
+            if (!process.isFinished()){
+                //IF the process still has remaining time , check if there are more processes in queue
+            if (!processQueue.isEmpty()){
+                //Re-enqueue the process to give it another chance to run in the next round
+                addProcessToQueue(process,processQueue,processMap);
+            }else {
+                //If this is the last process in the queue,run it to completion
+                System.out.println(Colors.BRIGHT_YELLOW + " ⚠ "+Colors.CYAN+process.getName()+Colors.RESET+Colors.YELLOW+"is the last process → running to completion"+Colors.RESET);
+                process.runToCompletion();   //Run untill the process completes
+                process.setFinishTime();
             }
+        } else {
+            process.setFinishTime();
         }
-        
+    }
         // End of the scheduler simulation
         System.out.println(Colors.BOLD + Colors.BRIGHT_GREEN + 
                           "╔════════════════════════════════════════════════════════════════════════════════╗" + 
@@ -283,6 +294,12 @@ public class SchedulerSimulation {
                           "╚════════════════════════════════════════════════════════════════════════════════╝" + 
                           Colors.RESET + "\n");
                           System.out.println("Total Context Switches:"+contextSwitchCount);
+                          System.out.println("\n" + Colors.BOLD + Colors.CYAN + "--- Process Waiting & Turnaround Times ---" + Colors.RESET);
+    for (Process p : new java.util.HashSet<>(processMap.values())) {
+        System.out.println(Colors.BRIGHT_WHITE + p.getName() + Colors.RESET + 
+                           " | Waiting Time: " + Colors.YELLOW + p.getWaitingTime() + "ms" + Colors.RESET + 
+                           " | Turnaround Time: " + Colors.YELLOW + p.getTurnaroundTime() + "ms" + Colors.RESET);
+    }
     }
     
     // Method to add a process to the queue and map, while printing a "ready" message
