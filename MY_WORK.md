@@ -29,11 +29,11 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
-| **Repository Link** | [Paste your repository link here] |
+| **Full Name** | [Wed Altamimi] |
+| **Student ID** | [446052008] |
+| **University Email** | [446052008]@std.psau.edu.sa |
+| **GitHub Username** | [wedrtmai] |
+| **Repository Link** | [https://github.com/wedrtmai/OS-Assignment1-Wed-Altamimi] |
  
 ---
 
@@ -129,69 +129,71 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - [October 7, 2026 , 06:30 PM]
+**What I did**:Forked the repository, set up the project locally, and updated the student ID.
 
-**Details**:
+**Details**:Forked the starter repository, set up the Java project locally in VS Code, and updated the student ID variable to initialize the random number generator
 
-**Challenges**:
+**Challenges**: Ensuring the random number generator is correctly seeded with my unique university ID so the simulation output is unique.
 
-**Solution**:
+**Solution**:Located line 150 in SchedulerSimulation.java and replaced the default ID placeholder with my actual student ID before pushing the first commit
 
-**Time spent**:
-
----
-
-### Entry 2 - [Date and Time]
-**What I did**:
-
-**Details**:
-
-**Challenges**:
-
-**Solution**:
-
-**Time spent**:
+**Time spent**:30 minutes
 
 ---
 
-### Entry 3 - [Date and Time]
-**What I did**:
+### Entry 2 - [October 7, 2026 , 09:15 PM]
+**What I did**: Added process priority to the scheduler.
 
 **Details**:
+Modified the Process class to assign a random priority (1-10) when a process object is created.
 
 **Challenges**:
-
+ Determining the best place to assign the priority without affecting the FIFO nature of the Round Robin ready queue.
 **Solution**:
-
+Modified the Process constructor to generate and assign the priority automatically using new Random().nextInt(10) + 1.
 **Time spent**:
+45 minutes
+---
+
+### Entry 3 - [October 8, 2026, 12:30 AM]
+**What I did**:
+ Implemented the context switch counter.
+**Details**:
+ Added a static counter to track how many times the CPU switches between threads during the simulation.
+**Challenges**:
+Finding the exact logical point in the scheduler loop where a context switch truly happens.
+**Solution**:
+Declared a static variable contextSwitches and incremented it inside the while loop right before executing or resuming a thread.
+**Time spent**: 1 hour
 
 ---
 
-### Entry 4 - [Date and Time]
+### Entry 4 - [October 8, 2026, 01:45 AM]
 **What I did**:
+Calculated Waiting and Turnaround Times.
 
 **Details**:
-
+ Tracked arrival and finish times for each process to calculate the final metrics.
 **Challenges**:
-
+ Processes in Round Robin enter the queue multiple times, making it difficult to track their exact finish time
 **Solution**:
-
+Added logic to record finishTime only when remainingTime reaches zero, then calculated Turnaround Time (Finish - Arrival) and Waiting Time (Turnaround - Burst).
 **Time spent**:
-
+1 hour
 ---
 
-### Entry 5 - [Date and Time]
+### Entry 5 - [October 8, 2026, 03:00 AM]
 **What I did**:
-
+Created the final output table.
 **Details**:
-
+Formatted and printed the calculated metrics in a clean table at the end of the execution.
 **Challenges**:
-
+The final table printed duplicate rows for the same process because of the context switches adding them to the map multiple times.
 **Solution**:
-
+ Used new java.util.HashSet<>(processMap.values()) in the print loop to eliminate duplicate process objects and display a clean table.
 **Time spent**:
-
+ 30 minutes
 ---
 
 ### Entry 6 - [Optional - Date and Time]
