@@ -39,7 +39,7 @@
 
 ## 🎥 Video Link
 
-**Video Link**: [Paste your video link here]
+**Video Link**: [https://drive.google.com/drive/folders/18q-HfFZK_bg-s9ySA9irRHF43JvS0V9p]
 
 > ⚠️ **WARNING:** The video must be **publicly accessible** ("Anyone with the link can view") on **Google Drive**, **YouTube (Unlisted or Public)** or any other cloud file-sharing system. A private, restricted or broken link counts as a **missing video (-1 mark)**.
 >
@@ -196,9 +196,9 @@ The final table printed duplicate rows for the same process because of the conte
  30 minutes
 ---
 
-### Entry 6 - [October 10, 2026, 04:45 AM]
+### Entry 6 - [October 10, 2026, 07:45 PM]
 **What I did**:
-Completed technical documentation Reflection and Technical Answers.
+Completed technical documentation Reflection and Technical Answers and Recorded the explanation video and uploaded it to Google Drive.
 **Details**:
 : Answered the reflection and technical questions in MY_WORK.md based on my code implementation
 **Challenges**:
@@ -403,11 +403,11 @@ P1 enters the Terminated state when its remainingTime reaches zero and the run()
 - [ ✅] No section headers deleted
 
 **Video**
-- [ ] 2-3 minutes long, named `StudentID_Assignment1_Demo.mp4`
-- [ ] Shows your name, ID, repository, 3 features, IDE execution, one threading concept, and commit history
-- [ ] Link is **public** (tested in an incognito window) and pasted in the **Video Link** section above
+- [ ✅] 2-3 minutes long, named `StudentID_Assignment1_Demo.mp4`
+- [ ✅] Shows your name, ID, repository, 3 features, IDE execution, one threading concept, and commit history
+- [✅ ] Link is **public** (tested in an incognito window) and pasted in the **Video Link** section above
 
 **Blackboard**
-- [ ] Submit **only** the link to your public GitHub repository
+- [ ✅] Submit **only** the link to your public GitHub repository
 
 > 🎯 **Good luck!** Start early, commit regularly, and make sure you can explain every line you submit.
