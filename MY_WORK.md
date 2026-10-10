@@ -196,31 +196,31 @@ The final table printed duplicate rows for the same process because of the conte
  30 minutes
 ---
 
-### Entry 6 - [Optional - Date and Time]
+### Entry 6 - [October 10, 2026, 04:45 AM]
 **What I did**:
-
+Completed technical documentation Reflection and Technical Answers.
 **Details**:
-
+: Answered the reflection and technical questions in MY_WORK.md based on my code implementation
 **Challenges**:
-
+Tracing the exact output for Question 2 to show how a process is re-queued.
 **Solution**:
-
+Ran the code, copied the specific output snippet, and explained the context switch accurately
 **Time spent**:
-
+1.5 hour
 ---
 
 ## Development Log Summary
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: [5 hours]
 
 **Most challenging part**:
-
+Tracking the accurate wait times and resolving the duplicate outputs in the final metrics table.
 **Most interesting learning**:
-
+Seeing how Thread.start() and Thread.sleep() can actually simulate the behavior of a real Operating System's CPU context switching.
 **What I would do differently next time**:
-
+I would test the data structures earlier to avoid the redundancy issue that required adding the HashSet later.
 ---
 
 # Part B: Reflection (0.5 mark)
@@ -239,7 +239,7 @@ The final table printed duplicate rows for the same process because of the conte
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+[I learned how Java executes multiple processes concurrently rather than sequentially,Using the Runnable interface allows a class to define its execution task and Calling Thread.start() begins the actual lifecycle of the thread. I also saw how Thread.sleep() is used to simulate CPU burst times. Finally using Thread.join() helped me understand how the main program waits before context switching.]
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -247,7 +247,8 @@ The final table printed duplicate rows for the same process because of the conte
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+[Calculating the waiting and turnaround times accurately was the hardest part. In a Round Robin scheduler single process executes multiple times before completion so This made tracking the exact finishTime very complicated. Additionally this repeated queuing caused my final table to display duplicate rows for the same process. It took effort to trace the execution flow and fix these issues.
+Question 3: How did you overcome the challenges you faced?]
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -255,7 +256,7 @@ The final table printed duplicate rows for the same process because of the conte
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+[I fixed the timing issue by isolating the exact moment a process finishes. I added an if condition to check if remainingTime == 0 before recording the final end time. To fix the duplicate rows and I changed how the data is printed. I wrapped my map values in a HashSet. This naturally filtered out the repetitions and provided a clean output table.]
 
 ## Question 4: How can you apply multithreading concepts in real-world applications?
 
@@ -263,19 +264,19 @@ The final table printed duplicate rows for the same process because of the conte
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+[Multithreading is essential for building responsive applications that handle multiple tasks at once. For example, a web browser uses one thread to load HTML and another to fetch images. A media player can stream audio in the background while updating the user interface. Web servers also rely on it to serve thousands of client requests concurrently. This ensures that software remains highly interactive and efficient.]
 
 ### Optional: What would you like to learn more about?
 
-[Any topics related to threading or operating systems that you're curious about?]
+[I want to learn more about thread synchronization and how to prevent race conditions when multiple threads modify shared variables]
 
 ### Optional: How confident do you feel about multithreading concepts now?
 
-[Beginner / Intermediate / Confident. What do you understand well? What needs more practice?]
+[Intermediate. I understand the thread lifecycle and scheduling, but I need more practice with complex synchronization]
 
 ### Optional: Feedback on the assignment
 
-[Any comments? Was it helpful? Too easy or hard? Suggestions?]
+[It was a practical assignment. Implementing the logic myself made the theoretical concept of the Round Robin scheduler much clearer]
 
 ---
 
@@ -295,7 +296,7 @@ The final table printed duplicate rows for the same process because of the conte
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+[A process has its own isolated memory, while a thread is a lightweight unit that shares memory within a process. We used threads here because they have lower creation overhead and allow faster context switching than real OS processes. In our code the Process class merely simulates a process, but it actually executes using a real Java thread when we call new Thread(process).]
 
 ## Question 2: Ready Queue Behavior
 
@@ -307,15 +308,15 @@ The final table printed duplicate rows for the same process because of the conte
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+[If a process does not finish within its time quantum, it is paused and moved back to the end of the ready queue. This constant re-queueing is essential for fairness because it prevents long processes from monopolizing the CPU.]
 
 Example from my output:
-```
-[Paste a relevant snippet from your program output here showing a process being re-queued]
+
+[⏸ P4 completed quantum 5000ms | Overall progress: [████████  ] 83% Remaining time: 2043ms ↻ P4 yields CPU for context switch ➕ P4 added to ready queue | Burst time: 12043ms Priority: 4 ┌ Ready Queue └ [P6 -> P9 -> P10 -> P11 -> P12 -> P4]]
 ```
 
 **Explanation of example:**
-[Explain what is happening in the output snippet you pasted.]
+[In the output snippet above, process P4 completed its allowed time quantum but still had 2043ms of remaining time. It yielded the CPU for a context switch and was"added to ready queue" (re-queued) at the end of the list. It had to wait for its next turn, which perfectly demonstrates how the Round-Robin algorithm shares CPU time fairly.]
 
 ## Question 3: Thread Lifecycle
 
@@ -326,15 +327,15 @@ Example from my output:
 **Your Answer:** *(3-5 sentences overall; one short explanation per state)*
 
 1. **New**: [When is P1 in the New state?]
-
+P1 enters the New state when it is instantiated as a thread using new Thread(process) inside the addProcessToQueue() method, before execution starts.
 2. **Runnable**: [When does P1 become Runnable?]
-
+P1 becomes Runnable the moment currentThread.start() is called in the main scheduler loop, waiting for the OS to allocate CPU time.
 3. **Running**: [When is P1 Running?]
-
+ P1 is in the Running state when the CPU actually executes the instructions inside its run() method.
 4. **Waiting**: [When and why would a thread be Waiting?]
-
+The main thread waits when currentThread.join(timeQuantum) is called, while P1 itself enters a timed waiting state using Thread.sleep() to simulate CPU execution.
 5. **Terminated**: [When is P1 Terminated?]
-
+P1 enters the Terminated state when its remainingTime reaches zero and the run() method completes its execution.
 ## Question 4: Real-World Applications
 
 **Question**: Give **TWO** real-world examples where Round-Robin scheduling with threads would be useful. **At least one** must be an operating-system-level scenario (e.g., how an OS scheduler shares CPU time among running programs). The second can be any application you choose. For each, explain what the system is and **why Round-Robin fits** (fairness, responsiveness, predictability).
@@ -343,32 +344,32 @@ Example from my output:
 
 **Your Answer:** *(3-5 sentences per example)*
 
-### Example 1 (operating-system level): [Name of scenario]
+### Example 1 (operating-system level): [OS CPU Time-Sharing Schedule]
 
 **Description**:
-[Describe the real-world scenario.]
+[ Modern operating systems like Windows or Linux manage multiple running applications (for example a browser and a music player) simultaneously on a single processor. The OS assigns each application a small time quantum to execute before performing a context switch to the next application.]
 
 **Why Round-Robin works well here**:
-[Fairness, responsiveness, predictability?]
+[Round-Robin guarantees fairness and high responsiveness. By rapidly cycling through the applications, it creates the illusion that all programs are running at the exact same time without allowing one heavy process to freeze the entire system.]
 
-### Example 2: [Name of application/scenario]
+### Example 2: [Web Server Request Handling]
 
 **Description**:
-[Describe the real-world scenario or application.]
+[A web server such as Apache receives thousands of concurrent HTTP requests from different clients trying to load a website. The server places incoming client requests into a queue and allocates a small time quantum to process a portion of each request before moving to the next.]
 
 **Why Round-Robin works well here**:
-[Fairness, responsiveness, predictability?]
+[ This approach ensures predictability and fairness for all users. If one user requests a massive file download, the Round-Robin mechanism prevents that single large task from monopolizing the server, ensuring that users requesting small files still receive fast responses.]
 
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+1.How to use Thread.start() and Thread.sleep() to simulate CPU execution and delays.
+2.The mechanical flow of a Round-Robin scheduler, including queue management and preempting processes.
+3.How to track exact timing metrics (turnaround and wait times) even when processes are interrupted and re-queued.
 
 **Concepts I need to study more:**
-1.
-2.
+1.Advanced thread synchronization using locks and semaphores to prevent race conditions.
+2.How the Java Virtual Machine (JVM) maps Java threads directly to native OS threads.
 
 ---
 
@@ -377,29 +378,29 @@ Example from my output:
 > ⚠️ **WARNING:** Go through every line. Late submission costs **-1 mark per day**, and the deadline is **October 10, 2026**.
 
 **Repository**
-- [ ] Repository is **PUBLIC** (Settings → Danger Zone → Visibility)
-- [ ] Repository is renamed to `OS-Assignment1-YourFirstName-YourLastName`
-- [ ] GitHub account uses the university email (`@std.psau.edu.sa`)
+- [ ✅] Repository is **PUBLIC** (Settings → Danger Zone → Visibility)
+- [✅ ] Repository is renamed to `OS-Assignment1-YourFirstName-YourLastName`
+- [✅ ] GitHub account uses the university email (`@std.psau.edu.sa`)
 
 **Code**
-- [ ] Student ID is set in `SchedulerSimulation.java` (line 150)
-- [ ] Code compiles and runs with no errors
-- [ ] Feature 1 (priority), Feature 2 (context switches) and Feature 3 (waiting time table) all work
-- [ ] Each feature has clear comments
+- [ ✅] Student ID is set in `SchedulerSimulation.java` (line 150)
+- [ ✅] Code compiles and runs with no errors
+- [ ✅] Feature 1 (priority), Feature 2 (context switches) and Feature 3 (waiting time table) all work
+- [✅ ] Each feature has clear comments
 
 **Commits**
-- [ ] **At least 3 meaningful commits, ideally 6 or more**
-- [ ] **One commit per feature**
-- [ ] Commits are spread over **different dates** (not all in the last hour)
-- [ ] Everything is **pushed** to GitHub
+- [ ✅] **At least 3 meaningful commits, ideally 6 or more**
+- [ ✅] **One commit per feature**
+- [ ✅] Commits are spread over **different dates** (not all in the last hour)
+- [✅ ] Everything is **pushed** to GitHub
 
 **This file (`MY_WORK.md`)**
-- [ ] Full name and student ID filled in at the top
-- [ ] Development log has **5+ entries** on different dates
-- [ ] Reflection: 4 questions, 5-7 sentences each
-- [ ] Technical answers: 4 questions, 3-5 sentences each, with examples from **your** output
-- [ ] No `[...]` placeholders left
-- [ ] No section headers deleted
+- [✅ ] Full name and student ID filled in at the top
+- [ ✅] Development log has **5+ entries** on different dates
+- [ ✅] Reflection: 4 questions, 5-7 sentences each
+- [ ✅] Technical answers: 4 questions, 3-5 sentences each, with examples from **your** output
+- [ ✅] No `[...]` placeholders left
+- [ ✅] No section headers deleted
 
 **Video**
 - [ ] 2-3 minutes long, named `StudentID_Assignment1_Demo.mp4`
