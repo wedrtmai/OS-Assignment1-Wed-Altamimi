@@ -35,6 +35,7 @@ private long finishTime;
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
+       // Feature 1: Process priority assigned randomly from 1 to 10⁠ 
         this.priority=1+new Random().nextInt(10);
         this.burstTime = burstTime;
         this.arrivalTime=System.currentTimeMillis();
@@ -254,6 +255,7 @@ public class SchedulerSimulation {
             
             // Start the thread, which will run the process for one time quantum
             currentThread.start();
+             // Feature 2: Context switch counter trackin
             contextSwitchCount++;
             
             try {
@@ -294,6 +296,7 @@ public class SchedulerSimulation {
                           "╚════════════════════════════════════════════════════════════════════════════════╝" + 
                           Colors.RESET + "\n");
                           System.out.println("Total Context Switches:"+contextSwitchCount);
+                          //Feature 3: Calculating and printing waiting and turnaround times
                           System.out.println("\n" + Colors.BOLD + Colors.CYAN + "--- Process Waiting & Turnaround Times ---" + Colors.RESET);
     for (Process p : new java.util.HashSet<>(processMap.values())) {
         System.out.println(Colors.BRIGHT_WHITE + p.getName() + Colors.RESET + 
